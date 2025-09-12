@@ -1,2 +1,2 @@
-export { authMiddleware } from "./auth.middleware";
+export { authMiddleware, AuthenticatedRequest } from "./auth.middleware";
 export { sanitizeUserData } from "./sanitizeUserData";

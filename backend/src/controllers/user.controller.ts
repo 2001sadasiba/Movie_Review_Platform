@@ -3,7 +3,7 @@ import { UserService } from '../services';
 import { JWTService } from '../utils';
 import { Types } from 'mongoose';
 import { sendSuccess, sendError } from '../utils';
-import { AuthenticatedRequest } from '../middleware/auth.middleware';
+import { AuthenticatedRequest } from '../middleware';
 
 
 
