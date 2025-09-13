@@ -28,3 +28,24 @@ export const authenticateUser = async (token: string) => {
     });
     return res;
 }
+
+export const getOwnDetails = async (token: string) => {
+    const res = await axios.get(`${API_BASE}/api/v1/users/me`, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+    return res;
+}
+
+export const logoutUser = async (token: string) => {
+    const res = await axios.post(`${API_BASE}/api/v1/users/logout`, 
+        {}, 
+        {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+    );
+    return res.data;
+}

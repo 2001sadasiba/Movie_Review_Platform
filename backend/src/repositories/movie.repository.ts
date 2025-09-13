@@ -37,6 +37,12 @@ export class MovieRepository {
      * @returns 
      */
     async createMovie(movieData: Partial<IMovie>): Promise<IMovie> {
+        console.log("The movie IMDB id we get", movieData.imdbID);
+        const existingMovie = await MovieModel.findOne({ imdbID: movieData.imdbID });
+
+        if (existingMovie) {
+            return existingMovie;
+        }
         const movie = new MovieModel(movieData);
         return await movie.save();
     }
@@ -50,8 +56,8 @@ export class MovieRepository {
     async updateMovieRating(imdbId: string, averageRating: number): Promise<IMovie | null> {
         return await MovieModel.findOneAndUpdate(
             { imdbId },
-            { imdbRating: averageRating.toFixed(1) }, 
-            { new: true } 
+            { imdbRating: averageRating.toFixed(1) },
+            { new: true }
         ).exec();
     }
 

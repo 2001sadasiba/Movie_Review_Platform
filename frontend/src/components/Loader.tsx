@@ -1,16 +1,12 @@
 import React from 'react';
-import '../styles/Loader.css';
+import '../styles/Loader.css'; 
 
-interface LoaderProps {
-    message?: string;
-}
-
-const Loader: React.FC<LoaderProps> = ({ message = 'Loading...' }) => {
+const Loader: React.FC<{ message?: string }> = ({ message = "Loading..." }) => {
     return (
-        <div className="loader-overlay">
-            <div className="loader-container">
-                <div className="spinner"></div>
-                <p>{message}</p>
+        <div className="loading-overlay">
+            <div className="modern-loader">
+                <div className="loader-spinner"></div>
+                <p className="loader-text">{message}</p>
             </div>
         </div>
     );
