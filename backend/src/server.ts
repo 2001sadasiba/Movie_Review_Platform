@@ -1,11 +1,24 @@
 import apiRoutes from './api';
 import express from "express";
+import cors from 'cors'; // Import cors
 import { config, Database } from "./config";
 
 /**
  * Express app setup
  */
 const app = express();
+
+/**
+ * CORS Configuration
+ */
+app.use(cors({
+    origin: config.cors.corsOrigin, 
+    credentials: config.cors.corsCredentials === 'true', 
+}));
+
+/**
+ * Middleware
+ */
 app.use(express.json());
 
 /**
@@ -34,4 +47,5 @@ app.get("/", (req, res) => {
  */
 app.listen(config.server.port, () => {
     console.log(`Server running on port ${config.server.port}`);
+    console.log(`CORS configured for origin: ${config.cors.corsOrigin}`);
 });

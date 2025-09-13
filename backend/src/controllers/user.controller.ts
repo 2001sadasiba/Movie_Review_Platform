@@ -70,7 +70,7 @@ export class UserController {
             /**
              * 
              */
-            return sendSuccess(res, 'User created successfully', '', 201);
+            return sendSuccess(res, 'User created successfully', { token: token }, 201);
         } catch (error: any) {
             return sendError(res, error.message, 500);
         }
@@ -117,7 +117,7 @@ export class UserController {
                 maxAge: 24 * 60 * 60 * 1000,
             });
 
-            return sendSuccess(res, 'User login successful', '', 200);
+            return sendSuccess(res, 'User login successful', { token: token }, 200);
         } catch (error: any) {
             return sendError(res, error.message, 500);
         }
