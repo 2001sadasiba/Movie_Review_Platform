@@ -43,15 +43,17 @@ export class ReviewController {
     async createReview(req: AuthenticatedRequest, res: Response): Promise<Response> {
         try {
             const { movieId } = req.params;
-            const { rating, reviewText } = req.body;
+            const { ratings, reviewText } = req.body;
             const userId = req.user?.userId;
 
             if (!userId) {
                 return sendError(res, 'User not authenticated', 401);
             }
 
+            console.log("THe ratings we get", ratings);
+
             // Validate input
-            if (!rating || rating < 1 || rating > 5) {
+            if (!ratings || Number(ratings) < 1 || Number(ratings) > 5) {
                 return sendError(res, 'Rating must be between 1 and 5', 400);
             }
 
@@ -59,7 +61,7 @@ export class ReviewController {
                 return sendError(res, 'Review text is required', 400);
             }
 
-            const review = await this.reviewService.createReview(userId.toString(), movieId, rating, reviewText.trim());
+            const review = await this.reviewService.createReview(userId.toString(), movieId, ratings, reviewText.trim());
 
             return sendSuccess(res, 'Review created successfully', review, 201);
         } catch (error: any) {

@@ -41,14 +41,17 @@ export class OMDbService {
                 throw new Error(response.data.Error || 'Failed to search movies');
             }
 
-            const moviesOnly = response.data.Search?.filter((item) => item.Type === 'movie') || [];
-            return moviesOnly;
+            // Return all items, without filtering by type
+            const allItems = response.data.Search || [];
+
+            return allItems;
 
         } catch (error: any) {
             console.error('OMDB Search Error:', error.message);
             throw new Error(`Failed to search movies: ${error.message}`);
         }
     }
+
 
     async getMovieById(imdbId: string): Promise<OMDBSingleMovieResult> {
         try {
