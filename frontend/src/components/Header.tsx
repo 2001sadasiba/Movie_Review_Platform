@@ -20,7 +20,7 @@ const Header = () => {
     const handleLogout = async () => {
         try {
             if (token) {
-                await logoutUser(token); // Call API to logout
+                await logoutUser(token);
             }
         } catch (error) {
             console.error('Logout API error:', error);
@@ -34,20 +34,24 @@ const Header = () => {
 
     return (
         <header className="app-header">
-            <div className="container header-container">
-                <div className="logo">MovieReview</div>
+            <div className="header-container">
+                <div className="logo" onClick={() => navigate('/')}>
+                    🎬 CineVerse
+                </div>
 
-                <div className="hamburger" onClick={toggleMenu}>
-                    &#9776;
+                <div className={`hamburger ${isMobileMenuOpen ? 'open' : ''}`} onClick={toggleMenu}>
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </div>
 
                 <nav className={`nav-links ${isMobileMenuOpen ? 'open' : ''}`}>
                     {isAuthenticated ? (
                         <button className="logout-btn" onClick={handleLogout}>
-                            Logout
+                            🚪 Logout
                         </button>
                     ) : (
-                        <a href="/login">Login</a>
+                        <a href="/login" className="login-btn">🔐 Login</a>
                     )}
                 </nav>
             </div>
