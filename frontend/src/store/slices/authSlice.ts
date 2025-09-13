@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import type{ PayloadAction } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
 import { loginUser as loginApi, registerUser as registerApi } from '../../services';
 
 interface AuthState {
@@ -16,20 +16,21 @@ const initialState: AuthState = {
     error: null,
 };
 
-// Login async thunk
+// Login async thunk - FIXED
 export const loginUser = createAsyncThunk(
     'auth/login',
     async (credentials: { email: string; password: string }, { rejectWithValue }) => {
         try {
             const response = await loginApi(credentials);
-            return response.data;
+            console.log("The login data we get inside SLICE", response);
+            return response;
         } catch (err: any) {
             return rejectWithValue(err.response?.data?.message || 'Login failed');
         }
     }
 );
 
-// Register async thunk
+// Register async thunk - FIXED
 export const registerUser = createAsyncThunk(
     'auth/register',
     async (
@@ -38,7 +39,7 @@ export const registerUser = createAsyncThunk(
     ) => {
         try {
             const response = await registerApi({ ...payload, role: 'user' });
-            return response.data; 
+            return response;
         } catch (err: any) {
             return rejectWithValue(err.response?.data?.message || 'Registration failed');
         }
@@ -65,11 +66,17 @@ const authSlice = createSlice({
             state.loading = true;
             state.error = null;
         });
-        builder.addCase(loginUser.fulfilled, (state, action: PayloadAction<{ token: string }>) => {
+        builder.addCase(loginUser.fulfilled, (state, action: PayloadAction<{
+            success: boolean;
+            message: string;
+            status: number;
+            data: { token: string }
+        }>) => {
             state.loading = false;
-            state.token = action.payload.token;
+            // Extract token from action.payload.data.token
+            state.token = action.payload.data.token;
             state.isAuthenticated = true;
-            localStorage.setItem('authToken', action.payload.token);
+            localStorage.setItem('authToken', action.payload.data.token);
         });
         builder.addCase(loginUser.rejected, (state, action) => {
             state.loading = false;
@@ -81,11 +88,17 @@ const authSlice = createSlice({
             state.loading = true;
             state.error = null;
         });
-        builder.addCase(registerUser.fulfilled, (state, action: PayloadAction<{ token: string }>) => {
+        builder.addCase(registerUser.fulfilled, (state, action: PayloadAction<{
+            success: boolean;
+            message: string;
+            status: number;
+            data: { token: string }
+        }>) => {
             state.loading = false;
-            state.token = action.payload.token;
+            // Extract token from action.payload.data.token
+            state.token = action.payload.data.token;
             state.isAuthenticated = true;
-            localStorage.setItem('authToken', action.payload.token);
+            localStorage.setItem('authToken', action.payload.data.token);
         });
         builder.addCase(registerUser.rejected, (state, action) => {
             state.loading = false;

@@ -28,7 +28,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
       }
 
       try {
-        await authenticateUser();
+        await authenticateUser(token);
         // Authorized
       } catch (err) {
         dispatch(logout());

@@ -20,7 +20,11 @@ export const registerUser = async (payload: {
     return res.data;
 };
 
-export const authenticateUser = async () => {
-    const res = await axios.get(`${API_BASE}/api/v1/users/auth-check`);
+export const authenticateUser = async (token: string) => {
+    const res = await axios.get(`${API_BASE}/api/v1/users/auth-check`, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
     return res;
 }

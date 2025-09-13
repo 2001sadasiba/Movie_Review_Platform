@@ -24,6 +24,7 @@ const Header = () => {
                     <a href="/#movies">Movies</a>
                     <a href="/#reviews">Reviews</a>
                     <a href="/#profile">Profile</a>
+                    <a href="/#logout">Logout</a>
                 </nav>
             </div>
         </header>
