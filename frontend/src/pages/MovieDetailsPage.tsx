@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { movieDetails } from '../services/movieService';
 import type { RootState } from '../store/store';
-import { MovieDetails } from '../components'; 
+import { Footer, Header, MovieDetails } from '../components';
 
 interface Movie {
     Title: string;
@@ -67,7 +67,20 @@ const MovieDetailsPage: React.FC = () => {
     if (error) return <div className="text-center mt-5">{error}</div>;
     if (!movie) return <div className="text-center mt-5">No movie data available</div>;
 
-    return <MovieDetails movie={movie} />;
+    
+    return (
+        <div>
+            <Header />
+
+            <main className="main">
+                <div className="container">
+                    <MovieDetails movie={movie} />
+                </div>
+            </main>
+
+            <Footer />
+        </div>
+    );
 };
 
 export default MovieDetailsPage;

@@ -61,6 +61,8 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({ movie }) => {
         reviewText: ''
     });
     const [error, setError] = useState<string | null>(null);
+    const [isExpanded, setIsExpanded] = useState(false);
+
 
     const token = useSelector((state: RootState) => state.auth.token);
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
@@ -148,7 +150,15 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({ movie }) => {
                     {movie.Rated} • {movie.Runtime} • {movie.Genre}
                 </p>
 
-                <p className="plot">{movie.Plot}</p>
+                <p className="plot">
+                    {isExpanded ? movie.Plot : movie.Plot.slice(0, 220) + (movie.Plot.length > 220 ? '...' : '')}
+                    {movie.Plot.length > 220 && (
+                        <span className="toggle-plot" onClick={() => setIsExpanded(!isExpanded)}>
+                            {isExpanded ? ' See Less' : ' See More'}
+                        </span>
+                    )}
+                </p>
+
 
                 <div className="info-grid">
                     <div className="info-card">
@@ -206,7 +216,7 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({ movie }) => {
                         ))}
                     </div>
                 </div>
-            </div>  
+            </div>
 
             {/* Reviews Section */}
             <div className="reviews-section">
